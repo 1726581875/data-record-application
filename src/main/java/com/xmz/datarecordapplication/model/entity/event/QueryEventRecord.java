@@ -1,4 +1,4 @@
-package com.xmz.datarecordapplication.model.entity;
+package com.xmz.datarecordapplication.model.entity.event;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -9,21 +9,20 @@ import java.util.Date;
 
 /**
  * @author xiaomingzhang
- * @date 2022/6/14
- * 删除行记录表
+ * @date 2022/7/6
  */
 @Data
-public class DeleteRowRecord {
+public class QueryEventRecord {
 
     @TableId
     @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
-
     private Long recordId;
-
-    private String row;
-
+    private Long threadId;
+    private String databaseName;
+    private String execSql;
+    private Integer errorCode;
+    private Long executionTime;
     private Date createTime;
-
     private Date updateTime;
 }

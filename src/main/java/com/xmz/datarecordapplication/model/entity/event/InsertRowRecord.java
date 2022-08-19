@@ -1,4 +1,5 @@
-package com.xmz.datarecordapplication.model.entity;
+package com.xmz.datarecordapplication.model.entity.event;
+
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -9,20 +10,21 @@ import java.util.Date;
 
 /**
  * @author xiaomingzhang
- * @date 2022/7/6
+ * @date 2022/6/14
+ * 新增行记录表
  */
 @Data
-public class QueryEventRecord {
+public class InsertRowRecord {
 
     @TableId
     @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
+
     private Long recordId;
-    private Long threadId;
-    private String databaseName;
-    private String execSql;
-    private Integer errorCode;
-    private Long executionTime;
+
+    private String row;
+
     private Date createTime;
+
     private Date updateTime;
 }

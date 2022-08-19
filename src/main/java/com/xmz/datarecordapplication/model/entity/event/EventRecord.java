@@ -1,4 +1,4 @@
-package com.xmz.datarecordapplication.model.entity;
+package com.xmz.datarecordapplication.model.entity.event;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

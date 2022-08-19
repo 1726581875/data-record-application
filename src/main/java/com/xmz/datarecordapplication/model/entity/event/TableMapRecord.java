@@ -1,4 +1,4 @@
-package com.xmz.datarecordapplication.model.entity;
+package com.xmz.datarecordapplication.model.entity.event;
 
 import lombok.Data;
 

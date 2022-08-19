@@ -1,7 +1,7 @@
 package com.xmz.datarecordapplication.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.xmz.datarecordapplication.model.entity.MysqlColumn;
+import com.xmz.datarecordapplication.model.entity.metadata.MysqlColumn;
 import com.xmz.datarecordapplication.model.param.ColumnListParam;
 
 /**

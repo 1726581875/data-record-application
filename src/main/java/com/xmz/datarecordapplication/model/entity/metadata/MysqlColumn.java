@@ -1,4 +1,4 @@
-package com.xmz.datarecordapplication.model.entity;
+package com.xmz.datarecordapplication.model.entity.metadata;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -10,7 +10,7 @@ import java.util.Date;
  * @author xiaomingzhang
  * @date 2022/8/10
  *
- * 查询表结构元数据 select * from INFORMATION_SCHEMA.COLUMNS
+ * 字段对象
  */
 @Data
 @TableName("mysql_column")

@@ -2,8 +2,8 @@ package com.xmz.datarecordapplication.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.xmz.datarecordapplication.mapper.MysqlColumnMapper;
-import com.xmz.datarecordapplication.model.entity.MysqlColumn;
+import com.xmz.datarecordapplication.mapper.metadata.MysqlColumnMapper;
+import com.xmz.datarecordapplication.model.entity.metadata.MysqlColumn;
 import com.xmz.datarecordapplication.model.param.ColumnListParam;
 import com.xmz.datarecordapplication.service.MysqlColumnService;
 import lombok.extern.slf4j.Slf4j;

@@ -1,7 +1,7 @@
 package com.xmz.datarecordapplication.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.xmz.datarecordapplication.model.entity.EventRecord;
+import com.xmz.datarecordapplication.model.entity.event.EventRecord;
 
 /**
  * @author xiaomingzhang

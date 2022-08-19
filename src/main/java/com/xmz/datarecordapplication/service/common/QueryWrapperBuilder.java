@@ -3,7 +3,7 @@ package com.xmz.datarecordapplication.service.common;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.xmz.datarecordapplication.model.common.TimeRange;
-import com.xmz.datarecordapplication.model.entity.EventRecord;
+import com.xmz.datarecordapplication.model.entity.event.EventRecord;
 
 
 /**

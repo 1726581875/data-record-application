@@ -1,6 +1,6 @@
 package com.xmz.datarecordapplication.model.vo;
 
-import com.xmz.datarecordapplication.model.entity.EventRecord;
+import com.xmz.datarecordapplication.model.entity.event.EventRecord;
 import lombok.Data;
 
 /**

@@ -1,10 +1,10 @@
 package com.xmz.datarecordapplication.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.xmz.datarecordapplication.model.entity.DeleteRowRecord;
-import com.xmz.datarecordapplication.model.entity.EventRecord;
-import com.xmz.datarecordapplication.model.entity.InsertRowRecord;
-import com.xmz.datarecordapplication.model.entity.UpdateRowRecord;
+import com.xmz.datarecordapplication.model.entity.event.DeleteRowRecord;
+import com.xmz.datarecordapplication.model.entity.event.EventRecord;
+import com.xmz.datarecordapplication.model.entity.event.InsertRowRecord;
+import com.xmz.datarecordapplication.model.entity.event.UpdateRowRecord;
 import com.xmz.datarecordapplication.model.param.DataRecordParam;
 import com.xmz.datarecordapplication.model.param.EventRecordListParam;
 import com.xmz.datarecordapplication.model.vo.EventDetailVO;

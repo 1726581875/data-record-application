@@ -3,7 +3,7 @@ package com.xmz.datarecordapplication.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xmz.datarecordapplication.mapper.*;
-import com.xmz.datarecordapplication.model.entity.*;
+import com.xmz.datarecordapplication.model.entity.event.*;
 import com.xmz.datarecordapplication.model.param.DataRecordParam;
 import com.xmz.datarecordapplication.model.param.EventRecordListParam;
 import com.xmz.datarecordapplication.model.vo.EventDetailVO;

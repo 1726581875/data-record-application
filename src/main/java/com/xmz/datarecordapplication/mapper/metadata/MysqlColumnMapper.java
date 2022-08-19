@@ -1,7 +1,7 @@
-package com.xmz.datarecordapplication.mapper;
+package com.xmz.datarecordapplication.mapper.metadata;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.xmz.datarecordapplication.model.entity.MysqlColumn;
+import com.xmz.datarecordapplication.model.entity.metadata.MysqlColumn;
 
 /**
  * @author xiaomingzhang

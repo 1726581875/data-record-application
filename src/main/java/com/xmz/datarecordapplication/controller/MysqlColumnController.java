@@ -1,7 +1,7 @@
 package com.xmz.datarecordapplication.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.xmz.datarecordapplication.model.entity.MysqlColumn;
+import com.xmz.datarecordapplication.model.entity.metadata.MysqlColumn;
 import com.xmz.datarecordapplication.model.param.ColumnListParam;
 import com.xmz.datarecordapplication.service.MysqlColumnService;
 import org.springframework.beans.factory.annotation.Autowired;
