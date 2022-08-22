@@ -11,7 +11,7 @@ import java.util.Date;
  * 数据库对象
  */
 @Data
-public class MysqlSchemata {
+public class MysqlSchema {
 
     @TableId
     private Long id;
