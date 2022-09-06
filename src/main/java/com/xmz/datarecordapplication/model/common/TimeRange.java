@@ -16,5 +16,4 @@ public class TimeRange {
 
     private Date endTime;
 
-
 }
