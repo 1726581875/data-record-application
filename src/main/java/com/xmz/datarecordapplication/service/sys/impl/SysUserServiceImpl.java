@@ -57,7 +57,7 @@ public class SysUserServiceImpl implements SysUserService {
         // 校验验证码
         VerifyCode verifyCode = (VerifyCode)session.getAttribute(VERIFY_CODE);
         if(verifyCode == null || verifyCode.getCode().equals(param.getVerifyCode())) {
-            log.warn("验证码不正确,输入的code={}, session存储的code={}", param.getVerifyCode(), verifyCode);
+            log.warn("验证码不正确,,sessionId={},输入的code={}, session存储的code={}", session.getId(), param.getVerifyCode(), verifyCode);
             throw new ValidationException("验证码不正确");
         }
         if(verifyCode.isExpired()) {

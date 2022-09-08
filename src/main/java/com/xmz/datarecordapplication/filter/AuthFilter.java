@@ -6,6 +6,8 @@ import com.xmz.datarecordapplication.model.AuthorizeUser;
 import com.xmz.datarecordapplication.model.common.RespResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.StringUtils;
@@ -55,15 +57,20 @@ public class AuthFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
+
+
+        log.info("sessionId={}", request.getSession().getId());
         String accessUrl = request.getRequestURI();
         if (isExcludePath(accessUrl)) {
             filterChain.doFilter(request, response);
             return;
         }
+
         try {
             AuthorizeUser authorizeUser = (AuthorizeUser)request.getSession().getAttribute(AuthorizeUser.USER_KEY);
             if(authorizeUser == null) {
                 responseMsg(response, -1, "用户没登录");
+                return;
             }
             UserContext.setAuthorizeUser(authorizeUser);
 
@@ -95,7 +102,7 @@ public class AuthFilter implements Filter {
     }
 
     private void responseMsg(HttpServletResponse response, Integer status, String message) throws IOException {
-        response.setStatus(status);
+        response.setStatus(HttpStatus.OK.value());
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json;charset=utf-8");
         response.getWriter().write(objectMapper.writeValueAsString(

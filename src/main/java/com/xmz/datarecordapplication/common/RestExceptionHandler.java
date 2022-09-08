@@ -1,5 +1,6 @@
 package com.xmz.datarecordapplication.common;
 
+import com.xmz.datarecordapplication.common.exception.ValidationException;
 import com.xmz.datarecordapplication.model.common.RespResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -16,11 +17,18 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class RestExceptionHandler {
 
+
+    @ExceptionHandler(ValidationException.class)
+    public RespResult ValidationException(ValidationException e) {
+        log.error("全局异常信息 ValidationException={}", e.getMessage(), e);
+        return RespResult.fail(e.getMessage());
+    }
+
     @ExceptionHandler(Exception.class)
-    //@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public RespResult exception(Exception e) {
         log.error("全局异常信息 ex={}", e.getMessage(), e);
-        return RespResult.fail("发生服务内部错误");
+        return RespResult.fail("未知异常");
     }
 
 

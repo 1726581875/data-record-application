@@ -1,12 +1,15 @@
 package com.xmz.datarecordapplication.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import javax.servlet.annotation.WebFilter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,12 +28,25 @@ public class CorsConfig {
     @Value("${sys.allowOrigins:*}")
     private String allowOrigins;
 
+
     /**
      * 跨域配置
      * @return
      */
     @Bean
-    public CorsFilter corsFilter() {
+    public FilterRegistrationBean registerCorsFilter() {
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+        CorsFilter corsFilter = getCorsFilter();
+        filterRegistrationBean.setFilter(corsFilter);
+        filterRegistrationBean.addUrlPatterns("/*");
+        filterRegistrationBean.setName("corsFilter");
+        filterRegistrationBean.setOrder(-1);
+        return filterRegistrationBean;
+    }
+
+
+
+    private CorsFilter getCorsFilter() {
         //所配置允许的域，默认为*（所有）
         List<String> allowOriginList = Arrays.asList(allowOrigins.split(","));
         CorsConfiguration config = new CorsConfiguration();
