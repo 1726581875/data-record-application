@@ -44,8 +44,8 @@ public class SysUserServiceImpl implements SysUserService {
         String codeText = verificationCode.getText();
 
         log.info("获取验证码，sessionId={},code={}",request.getSession().getId(), codeText);
-        // 验证码放到session,有效时间为60秒
-        request.getSession().setAttribute(VERIFY_CODE, new VerifyCode(codeText, System.currentTimeMillis() + 1000 * 60));
+        // 验证码放到session,有效时间为5分钟
+        request.getSession().setAttribute(VERIFY_CODE, new VerifyCode(codeText, System.currentTimeMillis() + 1000 * 60 * 5));
         VerificationCode.output(image,response.getOutputStream());
     }
 
@@ -56,7 +56,8 @@ public class SysUserServiceImpl implements SysUserService {
         HttpSession session = request.getSession();
         // 校验验证码
         VerifyCode verifyCode = (VerifyCode)session.getAttribute(VERIFY_CODE);
-        if(verifyCode == null || verifyCode.getCode().equals(param.getVerifyCode())) {
+        if(verifyCode == null || !verifyCode.getCode().toLowerCase()
+                .equals(param.getVerifyCode().toLowerCase())) {
             log.warn("验证码不正确,,sessionId={},输入的code={}, session存储的code={}", session.getId(), param.getVerifyCode(), verifyCode);
             throw new ValidationException("验证码不正确");
         }

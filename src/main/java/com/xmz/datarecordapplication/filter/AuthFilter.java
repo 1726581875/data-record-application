@@ -69,7 +69,7 @@ public class AuthFilter implements Filter {
         try {
             AuthorizeUser authorizeUser = (AuthorizeUser)request.getSession().getAttribute(AuthorizeUser.USER_KEY);
             if(authorizeUser == null) {
-                responseMsg(response, -1, "用户没登录");
+                responseMsg(response, HttpStatus.UNAUTHORIZED.value(),HttpStatus.UNAUTHORIZED.value(), "用户没登录");
                 return;
             }
             UserContext.setAuthorizeUser(authorizeUser);
@@ -101,8 +101,8 @@ public class AuthFilter implements Filter {
         return false;
     }
 
-    private void responseMsg(HttpServletResponse response, Integer status, String message) throws IOException {
-        response.setStatus(HttpStatus.OK.value());
+    private void responseMsg(HttpServletResponse response,Integer httpStatus, Integer status, String message) throws IOException {
+        response.setStatus(httpStatus);
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json;charset=utf-8");
         response.getWriter().write(objectMapper.writeValueAsString(
