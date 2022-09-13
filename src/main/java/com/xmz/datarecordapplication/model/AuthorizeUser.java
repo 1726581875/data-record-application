@@ -14,6 +14,8 @@ public class AuthorizeUser {
 
     private Long userId;
 
+    private String tenantId;
+
     private String name;
 
     private String account;

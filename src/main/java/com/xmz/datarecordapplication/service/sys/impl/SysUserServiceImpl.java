@@ -78,7 +78,9 @@ public class SysUserServiceImpl implements SysUserService {
         }
 
         // 用户存储到session
-        request.getSession().setAttribute(AuthorizeUser.USER_KEY, new AuthorizeUser(user.getId(), user.getName(), user.getAccount()));
+        AuthorizeUser sysUser = new AuthorizeUser(user.getId(), user.getName(), user.getAccount());
+        sysUser.setTenantId(user.getTenantId());
+        request.getSession().setAttribute(AuthorizeUser.USER_KEY, sysUser);
     }
 
 
