@@ -5,8 +5,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xmz.datarecordapplication.common.UserContext;
 import com.xmz.datarecordapplication.common.exception.DataNotFoundException;
 import com.xmz.datarecordapplication.mapper.sys.SysDataSourceMapper;
+import com.xmz.datarecordapplication.mapper.sys.SysTenantTableMapper;
 import com.xmz.datarecordapplication.model.entity.sys.SysDataSource;
+import com.xmz.datarecordapplication.model.entity.sys.SysTenantTable;
 import com.xmz.datarecordapplication.model.param.sys.DataSourceListParam;
+import com.xmz.datarecordapplication.model.param.sys.TenantTableListParam;
 import com.xmz.datarecordapplication.service.sys.SysDataSourceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,8 @@ public class SysDataSourceServiceImpl implements SysDataSourceService {
 
     @Resource
     private SysDataSourceMapper dataSourceMapper;
+    @Resource
+    private SysTenantTableMapper tenantTableMapper;
 
     @Override
     public Page<SysDataSource> getList(DataSourceListParam param) {
@@ -58,6 +63,16 @@ public class SysDataSourceServiceImpl implements SysDataSourceService {
 
         dataSourceMapper.updateById(dataSource);
 
+    }
+
+    @Override
+    public Page<SysTenantTable> getTenantTableList(TenantTableListParam param) {
+
+        String tenantId = UserContext.getAuthorizeUser().getTenantId();
+
+        return tenantTableMapper.selectPage(param, new LambdaQueryWrapper<SysTenantTable>()
+                .eq(SysTenantTable::getDataSourceId, param.getDataSourceId())
+                .eq(SysTenantTable::getTenantId, tenantId));
     }
 
 }
