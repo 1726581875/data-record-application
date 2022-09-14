@@ -35,8 +35,11 @@ public class SysDataSourceServiceImpl implements SysDataSourceService {
     @Override
     public Page<SysDataSource> getList(DataSourceListParam param) {
 
-        Page<SysDataSource> page = dataSourceMapper.selectPage(param, new LambdaQueryWrapper<SysDataSource>()
-                .like(StringUtils.hasLength(param.getName()), SysDataSource::getName, param.getName()));
+        String tenantId = UserContext.getAuthorizeUser().getTenantId();
+        Page<SysDataSource> page = dataSourceMapper.selectPage(param,
+                new LambdaQueryWrapper<SysDataSource>()
+                        .eq(SysDataSource::getTenantId, tenantId)
+                        .like(StringUtils.hasLength(param.getName()), SysDataSource::getName, param.getName()));
 
         if(!CollectionUtils.isEmpty(page.getRecords())){
             page.getRecords().forEach(e -> e.setPassword(null));

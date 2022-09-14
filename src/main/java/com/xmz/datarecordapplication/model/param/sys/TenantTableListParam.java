@@ -12,6 +12,6 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class TenantTableListParam extends Page {
     @NotBlank
-    private Long dataSourceId;
+    private String dataSourceId;
 
 }
