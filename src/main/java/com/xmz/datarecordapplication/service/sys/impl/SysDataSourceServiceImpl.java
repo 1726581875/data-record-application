@@ -49,6 +49,15 @@ public class SysDataSourceServiceImpl implements SysDataSourceService {
     }
 
     @Override
+    public void save(SysDataSource dataSource) {
+        if(dataSource.getId() != null){
+            updateDataSourceById(dataSource);
+        } else {
+            addDataSource(dataSource);
+        }
+    }
+
+    @Override
     public void addDataSource(SysDataSource dataSource) {
         String tenantId = UserContext.getAuthorizeUser().getTenantId();
         dataSource.setTenantId(tenantId);
@@ -66,6 +75,11 @@ public class SysDataSourceServiceImpl implements SysDataSourceService {
 
         dataSourceMapper.updateById(dataSource);
 
+    }
+
+    @Override
+    public void deleteById(String id) {
+        dataSourceMapper.deleteById(id);
     }
 
     @Override

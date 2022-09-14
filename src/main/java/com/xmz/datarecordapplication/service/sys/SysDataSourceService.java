@@ -15,10 +15,13 @@ public interface SysDataSourceService {
 
     Page<SysDataSource> getList(DataSourceListParam param);
 
+    void save(SysDataSource dataSource);
+
     void addDataSource(SysDataSource dataSource);
 
     void updateDataSourceById(SysDataSource dataSource);
 
+    void deleteById(String id);
 
     Page<SysTenantTable> getTenantTableList(TenantTableListParam param);
 }

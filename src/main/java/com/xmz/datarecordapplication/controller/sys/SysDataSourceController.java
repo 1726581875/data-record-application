@@ -7,10 +7,7 @@ import com.xmz.datarecordapplication.model.param.sys.DataSourceListParam;
 import com.xmz.datarecordapplication.model.param.sys.TenantTableListParam;
 import com.xmz.datarecordapplication.service.sys.SysDataSourceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -31,6 +28,12 @@ public class SysDataSourceController {
         return sourceService.getList(param);
     }
 
+    @PostMapping("/save")
+    public void save(@RequestBody SysDataSource param) {
+        sourceService.save(param);
+    }
+
+
     @PostMapping("/add")
     public void add(@RequestBody SysDataSource param) {
          sourceService.addDataSource(param);
@@ -39,6 +42,11 @@ public class SysDataSourceController {
     @PostMapping("/update")
     public void update(@RequestBody SysDataSource param) {
          sourceService.updateDataSourceById(param);
+    }
+
+    @DeleteMapping("/deleteById")
+    public void deleteById(@RequestParam("id") String id) {
+        sourceService.deleteById(id);
     }
 
     @PostMapping("/getTenantTables")
