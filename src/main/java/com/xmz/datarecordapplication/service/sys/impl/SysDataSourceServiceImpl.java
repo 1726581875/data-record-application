@@ -2,16 +2,20 @@ package com.xmz.datarecordapplication.service.sys.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xmz.datarecordapplication.client.DataRecordClient;
 import com.xmz.datarecordapplication.common.UserContext;
 import com.xmz.datarecordapplication.common.exception.DataNotFoundException;
 import com.xmz.datarecordapplication.mapper.sys.SysDataSourceMapper;
 import com.xmz.datarecordapplication.mapper.sys.SysTenantTableMapper;
+import com.xmz.datarecordapplication.model.dto.DataMigrationDTO;
 import com.xmz.datarecordapplication.model.entity.sys.SysDataSource;
 import com.xmz.datarecordapplication.model.entity.sys.SysTenantTable;
+import com.xmz.datarecordapplication.model.param.sys.DataMigrationParam;
 import com.xmz.datarecordapplication.model.param.sys.DataSourceListParam;
 import com.xmz.datarecordapplication.model.param.sys.TenantTableListParam;
 import com.xmz.datarecordapplication.service.sys.SysDataSourceService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
@@ -31,6 +35,8 @@ public class SysDataSourceServiceImpl implements SysDataSourceService {
     private SysDataSourceMapper dataSourceMapper;
     @Resource
     private SysTenantTableMapper tenantTableMapper;
+    @Autowired
+    private DataRecordClient dataRecordClient;
 
     @Override
     public Page<SysDataSource> getList(DataSourceListParam param) {
@@ -90,6 +96,17 @@ public class SysDataSourceServiceImpl implements SysDataSourceService {
         return tenantTableMapper.selectPage(param, new LambdaQueryWrapper<SysTenantTable>()
                 .eq(SysTenantTable::getDataSourceId, param.getDataSourceId())
                 .eq(SysTenantTable::getTenantId, tenantId));
+    }
+
+    @Override
+    public void dataMigration(DataMigrationParam param) {
+        String tenantId = UserContext.getAuthorizeUser().getTenantId();
+        DataMigrationDTO dto = new DataMigrationDTO();
+        dto.setTenantId(tenantId);
+        dto.setDataSourceId(param.getDataSourceId());
+        dto.setTableName(param.getTableName());
+
+        dataRecordClient.doDataMigration(dto);
     }
 
 }

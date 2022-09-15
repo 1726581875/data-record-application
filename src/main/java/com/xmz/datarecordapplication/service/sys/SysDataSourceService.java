@@ -1,8 +1,10 @@
 package com.xmz.datarecordapplication.service.sys;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xmz.datarecordapplication.model.dto.DataMigrationDTO;
 import com.xmz.datarecordapplication.model.entity.sys.SysDataSource;
 import com.xmz.datarecordapplication.model.entity.sys.SysTenantTable;
+import com.xmz.datarecordapplication.model.param.sys.DataMigrationParam;
 import com.xmz.datarecordapplication.model.param.sys.DataSourceListParam;
 import com.xmz.datarecordapplication.model.param.sys.TenantTableListParam;
 
@@ -24,4 +26,6 @@ public interface SysDataSourceService {
     void deleteById(String id);
 
     Page<SysTenantTable> getTenantTableList(TenantTableListParam param);
+
+    void dataMigration(DataMigrationParam param);
 }

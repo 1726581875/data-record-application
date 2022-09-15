@@ -45,7 +45,7 @@ public class AuthFilter implements Filter {
 
     static {
         pathList = new LinkedList<>();
-        //pathList.add("/**");
+        pathList.add("/**");
         pathList.add("/sysUser/login");
         pathList.add("/sysUser/register");
         pathList.add("/sysUser/getVerifyCode");
