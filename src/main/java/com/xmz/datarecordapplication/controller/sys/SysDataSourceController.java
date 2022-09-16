@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xmz.datarecordapplication.model.dto.DataMigrationDTO;
 import com.xmz.datarecordapplication.model.entity.sys.SysDataSource;
 import com.xmz.datarecordapplication.model.entity.sys.SysTenantTable;
+import com.xmz.datarecordapplication.model.param.sys.DataMigrationParam;
 import com.xmz.datarecordapplication.model.param.sys.DataSourceListParam;
 import com.xmz.datarecordapplication.model.param.sys.TenantTableListParam;
 import com.xmz.datarecordapplication.service.sys.SysDataSourceService;
@@ -56,8 +57,8 @@ public class SysDataSourceController {
     }
 
     @PostMapping("/dataMigration")
-    public void dataMigration(@RequestBody DataSourceListParam param) {
-        sourceService.dataMigration(dto);
+    public void dataMigration(@RequestBody DataMigrationParam param) {
+        sourceService.dataMigration(param);
     }
 
 

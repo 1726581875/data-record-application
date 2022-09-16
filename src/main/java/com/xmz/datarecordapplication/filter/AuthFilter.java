@@ -6,7 +6,6 @@ import com.xmz.datarecordapplication.model.AuthorizeUser;
 import com.xmz.datarecordapplication.model.common.RespResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
@@ -45,7 +44,6 @@ public class AuthFilter implements Filter {
 
     static {
         pathList = new LinkedList<>();
-        pathList.add("/**");
         pathList.add("/sysUser/login");
         pathList.add("/sysUser/register");
         pathList.add("/sysUser/getVerifyCode");
