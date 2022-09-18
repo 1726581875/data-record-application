@@ -34,8 +34,16 @@ public class CommonBaseClient {
             } else {
                 paramMap = ObjectToMapUtil.toMap(param);
             }
-            HttpEntity<Map<String, Object>> httpEntity = new HttpEntity<>(paramMap,headers);
-            ResponseEntity<T> response = restTemplate.postForEntity(url, httpEntity, responseType);
+
+            ResponseEntity<T> response = null;
+
+            if(HttpMethod.POST.equals(method)) {
+                HttpEntity<Map<String, Object>> httpEntity = new HttpEntity<>(paramMap, headers);
+                response = restTemplate.postForEntity(url, httpEntity, responseType);
+            } else if(HttpMethod.GET.equals(method)){
+                response = restTemplate.getForEntity(url, responseType, paramMap);
+            }
+
             if (HttpStatus.OK.equals(response.getStatusCode())) {
                 return response.getBody();
             } else {
@@ -50,6 +58,10 @@ public class CommonBaseClient {
 
     public RespResult doPost(String url, Object param){
         return doRequest(url, HttpMethod.POST, param, RespResult.class);
+    }
+
+    public RespResult doGet(String url, Object param){
+        return doRequest(url, HttpMethod.GET, param, RespResult.class);
     }
 
 }

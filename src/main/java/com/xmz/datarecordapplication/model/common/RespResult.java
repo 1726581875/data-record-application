@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 @Getter
 @ToString
-public class RespResult implements Serializable {
+public class RespResult<T> implements Serializable {
 
     private static final long serialVersionUID = 3069934188369972954L;
     /**
@@ -26,7 +26,7 @@ public class RespResult implements Serializable {
     /**
      * 数据内容
      */
-    private Object data;
+    private T data;
 
     /**
      * 链路追踪id,方便日志排查
@@ -37,7 +37,7 @@ public class RespResult implements Serializable {
     public RespResult() {
     }
 
-    public RespResult(Integer status, String msg, Object data) {
+    public RespResult(Integer status, String msg, T data) {
         this.status = status;
         this.msg = msg;
         this.data = data;
@@ -99,7 +99,7 @@ public class RespResult implements Serializable {
         return this;
     }
 
-    public RespResult setData(Object data) {
+    public RespResult setData(T data) {
         this.data = data;
         return this;
     }
