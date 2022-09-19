@@ -1,5 +1,6 @@
 package com.xmz.datarecordapplication.model.entity.sys;
 
+
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -10,26 +11,25 @@ import java.util.Date;
 
 /**
  * @author xiaomingzhang
- * @date 2022/9/5
+ * @date 2022/9/19
  */
 @Data
-public class SysUser {
+public class SysDataSyncRecord {
 
     @TableId(type = IdType.AUTO)
     @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
-    private String name;
-
     private String tenantId;
 
-    private String account;
+    @JsonSerialize(using = ToStringSerializer.class)
+    private Long dataSourceId;
 
-    private String password;
+    private String dbName;
 
-    private Integer status;
+    private String sourceTableName;
 
-    private Date loginTime;
+    private String syncStatus;
 
     private Date createTime;
 

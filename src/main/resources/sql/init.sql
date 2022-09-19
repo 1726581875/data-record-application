@@ -15,7 +15,7 @@ CREATE TABLE `sys_user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 
 
-INSERT INTO `bin_log_record`.`sys_user`(`id`, `tenantId`,`name`, `account`, `password`, `status`, `login_time`, `create_time`, `update_time`) VALUES (1,'123456789','admin', 'root', 'root', 1, NULL, '2022-09-09 14:38:52', '2022-09-09 14:38:52');
+INSERT INTO `bin_log_record`.`sys_user`(`id`, `tenantId`,`name`, `account`, `password`, `status`, `login_time`, `create_time`, `update_time`) VALUES (1,'abcd520','admin', 'root', 'root', 1, NULL, '2022-09-09 14:38:52', '2022-09-09 14:38:52');
 
 CREATE TABLE `sys_data_source` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
@@ -35,13 +35,28 @@ CREATE TABLE `sys_data_source` (
 
 CREATE TABLE `sys_tenant_table` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-	`tenant_id` varchar(36) NOT NULL COMMENT '租户id',
+  `tenant_id` varchar(36) NOT NULL COMMENT '租户id',
   `data_source_id` bigint(20) NOT NULL COMMENT '数据源id',
-  `table_name` varchar(64) NOT NULL COMMENT '表名',
+  `source_table_name` varchar(64) NOT NULL COMMENT '源表名',
+  `table_name` varchar(64) NOT NULL COMMENT '备份表名',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_table_name` (`table_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='系统租户table信息表';
+
+
+
+CREATE TABLE `sys_data_sync_record` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `tenant_id` varchar(36) NOT NULL COMMENT '租户id',
+  `data_source_id` bigint(20) NOT NULL COMMENT '数据源id',
+  `db_name` varchar(64) DEFAULT NULL COMMENT '数据库名称',
+  `source_table_name` varchar(64) DEFAULT NULL COMMENT '源表名',
+  `sync_status` varchar(20) NOT NULL COMMENT '同步状态:RUNNING、FAIL、SUCCESS',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='数据同步记录表';
 
 

@@ -1,4 +1,4 @@
-package com.xmz.datarecordapplication.service.impl;
+package com.xmz.datarecordapplication.service.sys.impl;
 
 import com.xmz.datarecordapplication.client.DataRecordClient;
 import com.xmz.datarecordapplication.model.common.RespResult;

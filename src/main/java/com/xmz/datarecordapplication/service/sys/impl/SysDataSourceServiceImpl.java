@@ -95,7 +95,8 @@ public class SysDataSourceServiceImpl implements SysDataSourceService {
 
         return tenantTableMapper.selectPage(param, new LambdaQueryWrapper<SysTenantTable>()
                 .eq(SysTenantTable::getDataSourceId, param.getDataSourceId())
-                .eq(SysTenantTable::getTenantId, tenantId));
+                .eq(SysTenantTable::getTenantId, tenantId)
+                .orderByDesc(SysTenantTable::getUpdateTime));
     }
 
     @Override
