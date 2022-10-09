@@ -26,6 +26,7 @@ public class DataServiceImpl implements DataService {
     @Override
     public DataListVO getDataList(String tableName, Integer current, Integer size) {
 
+        // todo 直接接收前端传来的tableName拼接查询，存在sql注入风险
         DataListVO dataListVO = new DataListVO();
         RespResult<Integer> countResult = dataRecordClient.getCount(tableName);
         if (countResult == null || !countResult.isSuccess()) {

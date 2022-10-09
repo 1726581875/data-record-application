@@ -24,6 +24,11 @@ public class DataController {
         return dataService.getDataList(tableName, current, size);
     }
 
+    @GetMapping("/export")
+    public void export(String dataSourceId, String tableName) {
+
+    }
+
 
 
 

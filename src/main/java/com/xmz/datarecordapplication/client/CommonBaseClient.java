@@ -4,6 +4,7 @@ import com.xmz.datarecordapplication.common.util.ObjectToMapUtil;
 import com.xmz.datarecordapplication.model.common.RespResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -20,6 +21,9 @@ public class CommonBaseClient {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Value("${client.url.dataRecord:http://127.0.0.1:8989}")
+    private String dataRecordBaseUrl;
 
 
     private <T> T doRequest(String url, HttpMethod method, Object param, Class<T> responseType) {
@@ -57,11 +61,11 @@ public class CommonBaseClient {
     }
 
     public RespResult doPost(String url, Object param){
-        return doRequest(url, HttpMethod.POST, param, RespResult.class);
+        return doRequest(dataRecordBaseUrl + url, HttpMethod.POST, param, RespResult.class);
     }
 
     public RespResult doGet(String url, Object param){
-        return doRequest(url, HttpMethod.GET, param, RespResult.class);
+        return doRequest(dataRecordBaseUrl + url, HttpMethod.GET, param, RespResult.class);
     }
 
 }

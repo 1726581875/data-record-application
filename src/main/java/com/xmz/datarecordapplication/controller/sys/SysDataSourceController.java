@@ -1,7 +1,6 @@
 package com.xmz.datarecordapplication.controller.sys;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.xmz.datarecordapplication.model.dto.DataMigrationDTO;
 import com.xmz.datarecordapplication.model.entity.sys.SysDataSource;
 import com.xmz.datarecordapplication.model.entity.sys.SysTenantTable;
 import com.xmz.datarecordapplication.model.param.sys.DataMigrationParam;

@@ -19,26 +19,39 @@ import java.util.Map;
 public class DataRecordClient extends CommonBaseClient {
 
 
-    @Value("${client.url.dataRecord:http://127.0.0.1:8989}")
-    private String dataRecordBaseUrl;
-
-
+    /**
+     * 数据同步接口
+     * @param dto
+     * @return
+     */
     public RespResult doDataMigration(DataMigrationDTO dto) {
-        return super.doPost(dataRecordBaseUrl + "/dm/do",dto);
+        return super.doPost("/dm/do",dto);
     }
 
+    /**
+     * 获取数据列表接口
+     * @param tableName
+     * @param offset
+     * @param limit
+     * @return
+     */
     public RespResult<List<List>> getDataList(String tableName, Integer offset, Integer limit) {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("tableName", tableName);
         paramMap.put("offset", offset);
         paramMap.put("limit", limit);
-        return super.doGet(dataRecordBaseUrl + "/data/getList?tableName={tableName}&offset={offset}&limit={limit}", paramMap);
+        return super.doGet( "/data/getList?tableName={tableName}&offset={offset}&limit={limit}", paramMap);
     }
 
+    /**
+     * 获取数据总数接口
+     * @param tableName
+     * @return
+     */
     public RespResult<Integer> getCount(String tableName) {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("tableName", tableName);
-        return super.doGet(dataRecordBaseUrl + "/data/count?tableName={tableName}", paramMap);
+        return super.doGet( "/data/count?tableName={tableName}", paramMap);
     }
 
 }
