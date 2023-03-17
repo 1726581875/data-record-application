@@ -2,6 +2,8 @@ package com.xmz.datarecordapplication.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xmz.datarecordapplication.common.UserContext;
+import com.xmz.datarecordapplication.common.exception.SysUnauthorizedException;
 import com.xmz.datarecordapplication.mapper.*;
 import com.xmz.datarecordapplication.model.entity.event.*;
 import com.xmz.datarecordapplication.model.param.DataRecordParam;
@@ -36,7 +38,25 @@ public class EventRecordServiceImpl implements EventRecordService {
 
     @Override
     public Page<EventRecord> getList(EventRecordListParam param) {
-        return eventRecordMapper.selectPage(param, getQueryWrapper(param));
+        //return eventRecordMapper.selectPage(param, getQueryWrapper(param));
+
+        return eventRecordMapper.getEventList(param, getTenantSuffix());
+    }
+
+    private String getTenantSuffix() {
+        String tenantId = null;
+        // TODO catch异常，为了方便测试，无需登录直接查询
+        try {
+            tenantId = UserContext.getAuthorizeUser().getTenantId();
+        } catch (SysUnauthorizedException e){
+            log.info("获取租户id失败, 未授权异常", e);
+        }
+
+        if(tenantId == null){
+            return "";
+        }
+        // TODO _tenantId_dataSourceId
+        return "_" + tenantId + "_1";
     }
 
     private LambdaQueryWrapper<EventRecord> getQueryWrapper(EventRecordListParam param) {
@@ -52,11 +72,11 @@ public class EventRecordServiceImpl implements EventRecordService {
             }
         }
         // 事件类型
-        if(StringUtils.hasLength(param.getEventType())){
+        if (StringUtils.hasLength(param.getEventType())) {
             queryWrapper.eq(EventRecord::getEventType, param.getEventType());
         }
         // 排序方式
-        if(Objects.nonNull(param.getAsc()) && param.getAsc().equals(true)){
+        if (Objects.nonNull(param.getAsc()) && param.getAsc().equals(true)) {
             queryWrapper.orderByAsc(EventRecord::getEventTimestamp);
         } else {
             queryWrapper.orderByDesc(EventRecord::getEventTimestamp);
@@ -70,7 +90,7 @@ public class EventRecordServiceImpl implements EventRecordService {
     public EventDetailVO getById(Long id) {
 
         EventDetailVO eventDetailVO = new EventDetailVO();
-        EventRecord eventRecord = eventRecordMapper.selectById(id);
+        EventRecord eventRecord = eventRecordMapper.getEventRecordById(id, getTenantSuffix());
         if(eventRecord == null) {
             throw new IllegalStateException("数据不存在，id=" + id);
         }
@@ -87,8 +107,7 @@ public class EventRecordServiceImpl implements EventRecordService {
 
                 break;
             case "QUERY":
-                eventDetailVO.setExtraInfo(queryEventRecordMapper.selectOne(new LambdaQueryWrapper<QueryEventRecord>()
-                        .eq(QueryEventRecord::getRecordId, id)));
+                eventDetailVO.setExtraInfo(queryEventRecordMapper.getQueryEventByRecordId(id, getTenantSuffix()));
                 break;
             case "TABLE_MAP":
                 eventDetailVO.setExtraInfo(null);
@@ -106,19 +125,16 @@ public class EventRecordServiceImpl implements EventRecordService {
 
     @Override
     public Page<InsertRowRecord> getInsertRowList(DataRecordParam param) {
-        return insertRowRecordMapper.selectPage(param, new LambdaQueryWrapper<InsertRowRecord>()
-                .eq(InsertRowRecord::getRecordId, param.getRecordId()));
+        return insertRowRecordMapper.getInsertRowList(param, getTenantSuffix());
     }
 
     @Override
     public Page<DeleteRowRecord> getDeleteRowList(DataRecordParam param) {
-        return deleteRowRecordMapper.selectPage(param, new LambdaQueryWrapper<DeleteRowRecord>()
-                .eq(DeleteRowRecord::getRecordId, param.getRecordId()));
+        return deleteRowRecordMapper.getDeleteRowList(param, getTenantSuffix());
     }
 
     @Override
     public Page<UpdateRowRecord> getUpdateRowList(DataRecordParam param) {
-        return updateRowRecordMapper.selectPage(param, new LambdaQueryWrapper<UpdateRowRecord>()
-                .eq(UpdateRowRecord::getRecordId, param.getRecordId()));
+        return updateRowRecordMapper.getUpdateRowList(param, getTenantSuffix());
     }
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xmz.datarecordapplication.mapper.QueryEventRecordMapper">
+
+    <select id="getQueryEventByRecordId"
+            resultType="com.xmz.datarecordapplication.model.entity.event.QueryEventRecord">
+        select qer.* from query_event_record${tenantSuffix} qer where qer.record_id = #{recordId}
+    </select>
+</mapper>
+ 

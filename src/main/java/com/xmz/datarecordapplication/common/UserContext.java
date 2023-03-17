@@ -1,6 +1,7 @@
 package com.xmz.datarecordapplication.common;
 
 
+import com.xmz.datarecordapplication.common.exception.SysUnauthorizedException;
 import com.xmz.datarecordapplication.model.AuthorizeUser;
 
 
@@ -29,7 +30,7 @@ public final class UserContext {
     public static AuthorizeUser getAuthorizeUser() {
         AuthorizeUser loginUser = authorizeUserThreadLocal.get();
         if (loginUser == null) {
-            throw new RuntimeException("获取用户失败");
+            throw new SysUnauthorizedException("获取用户失败");
         }
         return loginUser;
     }

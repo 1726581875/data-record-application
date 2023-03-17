@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xmz.datarecordapplication.mapper.EventRecordMapper">
+
+    <select id="getEventList" resultType="com.xmz.datarecordapplication.model.entity.event.EventRecord">
+        select er.* from event_record${tenantSuffix} er
+        where 1 = 1
+        <if test="param.eventType != null and param.eventType != ''">
+            AND er.event_type = #{param.eventType}
+        </if>
+        <if test="param.timeRange.startTime != null">
+            AND er.event_timestamp >= #{param.timeRange.startTime}
+        </if>
+        <if test="param.timeRange.endTime != null">
+            AND er.event_timestamp &lt;= #{param.timeRange.startTime}
+        </if>
+
+        <if test="param.asc != null and param.asc">
+            order by er.event_timestamp asc
+        </if>
+        <if test="param.asc == null or !param.asc">
+            order by er.event_timestamp desc
+        </if>
+    </select>
+    <select id="getEventRecordById" resultType="com.xmz.datarecordapplication.model.entity.event.EventRecord">
+        select er.* from event_record${tenantSuffix} er where er.id = #{id}
+    </select>
+</mapper>
+ 

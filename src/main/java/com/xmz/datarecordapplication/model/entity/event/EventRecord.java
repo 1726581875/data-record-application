@@ -31,7 +31,7 @@ public class EventRecord {
      */
     private Long endLogPos;
     /**
-     * 语eI句开始执行的时间
+     * 语句开始执行的时间
      */
     private Date eventTimestamp;
 

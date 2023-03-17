@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xmz.datarecordapplication.mapper.UpdateRowRecordMapper">
+
+
+
+    <select id="getUpdateRowList"
+            resultType="com.xmz.datarecordapplication.model.entity.event.UpdateRowRecord">
+        select * from update_row_record${tenantSuffix} urr
+        where 1 = 1
+        <if test="param.recordId != null and param.recordId != ''">
+            AND urr.record_id = #{param.recordId}
+        </if>
+    </select>
+</mapper>
+ 

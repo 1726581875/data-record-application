@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * @author xiaomingzhang
  * @date 2022/8/4
+ * binlog事件controller
  */
 @RestController
 @RequestMapping("/eventRecord")

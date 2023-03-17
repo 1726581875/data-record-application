@@ -27,3 +27,5 @@ logging:
   level:
     com.xmz.datarecordapplication: debug
     ROOT: INFO
+
+authExcludePaths: /**
