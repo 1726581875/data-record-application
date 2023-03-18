@@ -13,6 +13,11 @@ spring:
   #时间格式化
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
+  #redis配置
+  redis:
+    host: localhost
+    port: 6379
+    password: root
 
 #mybatis配置文件位置
 mybatis:
@@ -28,4 +33,7 @@ logging:
     com.xmz.datarecordapplication: debug
     ROOT: INFO
 
-authExcludePaths: /**
+
+auth:
+  authExcludePaths: /**
+  useRedis: true

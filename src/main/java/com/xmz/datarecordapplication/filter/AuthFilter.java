@@ -5,7 +5,9 @@ import com.xmz.datarecordapplication.common.UserContext;
 import com.xmz.datarecordapplication.model.AuthorizeUser;
 import com.xmz.datarecordapplication.model.common.RespResult;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
@@ -34,8 +36,14 @@ public class AuthFilter implements Filter {
     @Resource
     private ObjectMapper objectMapper;
 
-    @Value("authExcludePaths:''")
+    @Value("${auth.authExcludePaths:''}")
     private String authExcludePaths;
+
+    @Value("${auth.useRedis:false}")
+    private Boolean useRedis;
+
+    @Resource
+    private RedisTemplate redisTemplate;
 
 
     private static AntPathMatcher antPathMatcher = new AntPathMatcher();
@@ -65,7 +73,12 @@ public class AuthFilter implements Filter {
         }
 
         try {
-            AuthorizeUser authorizeUser = (AuthorizeUser)request.getSession().getAttribute(AuthorizeUser.USER_KEY);
+            AuthorizeUser authorizeUser = null;
+            if(useRedis){
+                authorizeUser = (AuthorizeUser) redisTemplate.opsForValue().get(AuthorizeUser.USER_KEY + ":" + request.getSession().getId());
+            } else {
+                authorizeUser = (AuthorizeUser) request.getSession().getAttribute(AuthorizeUser.USER_KEY);
+            }
             if(authorizeUser == null) {
                 responseMsg(response, HttpStatus.UNAUTHORIZED.value(),HttpStatus.UNAUTHORIZED.value(), "用户没登录");
                 return;

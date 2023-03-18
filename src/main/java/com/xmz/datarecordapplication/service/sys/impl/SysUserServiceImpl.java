@@ -10,6 +10,8 @@ import com.xmz.datarecordapplication.model.param.sys.LoginParam;
 import com.xmz.datarecordapplication.model.param.sys.RegisterParam;
 import com.xmz.datarecordapplication.service.sys.SysUserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -22,6 +24,7 @@ import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author xiaomingzhang
@@ -34,6 +37,12 @@ public class SysUserServiceImpl implements SysUserService {
     @Resource
     private SysUserMapper sysUserMapper;
 
+    @Value("${auth.useRedis:false}")
+    private Boolean useRedis;
+
+    @Resource
+    private RedisTemplate redisTemplate;
+
     private static final String VERIFY_CODE = "VERIFY_CODE";
 
 
@@ -44,8 +53,13 @@ public class SysUserServiceImpl implements SysUserService {
         String codeText = verificationCode.getText();
 
         log.info("获取验证码，sessionId={},code={}",request.getSession().getId(), codeText);
+        VerifyCode verifyCode = new VerifyCode(codeText, System.currentTimeMillis() + 1000 * 60 * 5);
         // 验证码放到session,有效时间为5分钟
-        request.getSession().setAttribute(VERIFY_CODE, new VerifyCode(codeText, System.currentTimeMillis() + 1000 * 60 * 5));
+        if(useRedis){
+            redisTemplate.opsForValue().set(VERIFY_CODE + ":"  +request.getSession().getId(), verifyCode, 5, TimeUnit.MINUTES);
+        } else {
+            request.getSession().setAttribute(VERIFY_CODE,verifyCode);
+        }
         VerificationCode.output(image,response.getOutputStream());
     }
 
@@ -54,14 +68,20 @@ public class SysUserServiceImpl implements SysUserService {
 
         HttpServletRequest request = getHttpServletRequest();
         HttpSession session = request.getSession();
+
+        VerifyCode verifyCode = null;
         // 校验验证码
-        VerifyCode verifyCode = (VerifyCode)session.getAttribute(VERIFY_CODE);
+        if(useRedis){
+            verifyCode = (VerifyCode)redisTemplate.opsForValue().get(VERIFY_CODE + ":"  +request.getSession().getId());
+        } else {
+            verifyCode = (VerifyCode)session.getAttribute(VERIFY_CODE);
+        }
         if(verifyCode == null || !verifyCode.getCode().toLowerCase()
                 .equals(param.getVerifyCode().toLowerCase())) {
             log.warn("验证码不正确,,sessionId={},输入的code={}, session存储的code={}", session.getId(), param.getVerifyCode(), verifyCode);
             throw new ValidationException("验证码不正确");
         }
-        if(verifyCode.isExpired()) {
+        if(VerifyCode.isExpired(verifyCode.getExpirationTime())) {
             log.warn("验证码不正确,verifyCode={}", verifyCode);
             throw new ValidationException("验证码已过期");
         }
@@ -101,7 +121,11 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public void loginOut() {
         HttpServletRequest request = getHttpServletRequest();
-        request.getSession().removeAttribute(AuthorizeUser.USER_KEY);
+        if (useRedis) {
+            redisTemplate.delete(AuthorizeUser.USER_KEY + ":" + request.getSession().getId());
+        } else {
+            request.getSession().removeAttribute(AuthorizeUser.USER_KEY);
+        }
     }
 
     @Override

@@ -13,12 +13,17 @@ public class VerifyCode {
 
     private Long expirationTime;
 
+    public VerifyCode(){
+
+    }
+
     public VerifyCode(String code, Long expirationTime) {
         this.code = code;
         this.expirationTime = expirationTime;
     }
 
-    public boolean isExpired() {
+
+    public static boolean isExpired(Long expirationTime) {
         return expirationTime < System.currentTimeMillis();
     }
 

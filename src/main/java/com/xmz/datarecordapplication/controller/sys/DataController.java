@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/data")
-public class DataController {
+public class  DataController {
 
     @Autowired
     private DataService dataService;
