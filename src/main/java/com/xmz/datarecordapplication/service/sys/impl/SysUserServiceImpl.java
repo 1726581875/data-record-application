@@ -55,7 +55,7 @@ public class SysUserServiceImpl implements SysUserService {
         log.info("获取验证码，sessionId={},code={}",request.getSession().getId(), codeText);
         VerifyCode verifyCode = new VerifyCode(codeText, System.currentTimeMillis() + 1000 * 60 * 5);
         // 验证码放到session,有效时间为5分钟
-        if(useRedis){
+        if(useRedis) {
             redisTemplate.opsForValue().set(VERIFY_CODE + ":"  +request.getSession().getId(), verifyCode, 5, TimeUnit.MINUTES);
         } else {
             request.getSession().setAttribute(VERIFY_CODE,verifyCode);

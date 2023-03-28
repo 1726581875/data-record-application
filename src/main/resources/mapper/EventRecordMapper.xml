@@ -27,5 +27,15 @@
     <select id="getEventRecordById" resultType="com.xmz.datarecordapplication.model.entity.event.EventRecord">
         select er.* from event_record${tenantSuffix} er where er.id = #{id}
     </select>
+
+    <select id="getCRUDStat" resultType="com.xmz.datarecordapplication.model.vo.CrudStat">
+    SELECT
+        COALESCE(sum(CASE WHEN event_type = 'QUERY' THEN 1 ELSE 0 END ), 0) query_num,
+        COALESCE (sum(CASE WHEN event_type = 'EXT_WRITE_ROWS' THEN 1 ELSE 0 END ), 0) insert_num,
+        COALESCE (sum(CASE WHEN event_type = 'EXT_DELETE_ROWS' THEN 1 ELSE 0 END ), 0) delete_num,
+        COALESCE (sum(CASE WHEN event_type = 'EXT_UPDATE_ROWS' THEN 1 ELSE 0 END ), 0) update_num
+    FROM
+        event_record${tenantSuffix}
+    </select>
 </mapper>
  

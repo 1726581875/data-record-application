@@ -6,8 +6,10 @@ import com.xmz.datarecordapplication.common.UserContext;
 import com.xmz.datarecordapplication.common.exception.SysUnauthorizedException;
 import com.xmz.datarecordapplication.mapper.*;
 import com.xmz.datarecordapplication.model.entity.event.*;
+import com.xmz.datarecordapplication.model.param.CRUDStatParam;
 import com.xmz.datarecordapplication.model.param.DataRecordParam;
 import com.xmz.datarecordapplication.model.param.EventRecordListParam;
+import com.xmz.datarecordapplication.model.vo.CrudStat;
 import com.xmz.datarecordapplication.model.vo.EventDetailVO;
 import com.xmz.datarecordapplication.service.EventRecordService;
 import lombok.extern.slf4j.Slf4j;
@@ -57,6 +59,22 @@ public class EventRecordServiceImpl implements EventRecordService {
         }
         // TODO _tenantId_dataSourceId
         return "_" + tenantId + "_1";
+    }
+
+    private String getTenantSuffix(String dataSourceId) {
+
+        String tenantId = null;
+        try {
+            tenantId = UserContext.getAuthorizeUser().getTenantId();
+        } catch (SysUnauthorizedException e) {
+            log.info("获取租户id失败, 未授权异常", e);
+        }
+
+        if (tenantId == null) {
+            return "";
+        }
+
+        return "_" + tenantId + "_" + dataSourceId;
     }
 
     private LambdaQueryWrapper<EventRecord> getQueryWrapper(EventRecordListParam param) {
@@ -137,4 +155,12 @@ public class EventRecordServiceImpl implements EventRecordService {
     public Page<UpdateRowRecord> getUpdateRowList(DataRecordParam param) {
         return updateRowRecordMapper.getUpdateRowList(param, getTenantSuffix());
     }
+
+    @Override
+    public CrudStat getCRUDStat(CRUDStatParam param) {
+        String tenantSuffix = getTenantSuffix(param.getDataSourceId());
+        return eventRecordMapper.getCRUDStat(tenantSuffix);
+    }
+
+
 }

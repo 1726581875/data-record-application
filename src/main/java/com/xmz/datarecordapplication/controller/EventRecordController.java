@@ -5,8 +5,10 @@ import com.xmz.datarecordapplication.model.entity.event.DeleteRowRecord;
 import com.xmz.datarecordapplication.model.entity.event.EventRecord;
 import com.xmz.datarecordapplication.model.entity.event.InsertRowRecord;
 import com.xmz.datarecordapplication.model.entity.event.UpdateRowRecord;
+import com.xmz.datarecordapplication.model.param.CRUDStatParam;
 import com.xmz.datarecordapplication.model.param.DataRecordParam;
 import com.xmz.datarecordapplication.model.param.EventRecordListParam;
+import com.xmz.datarecordapplication.model.vo.CrudStat;
 import com.xmz.datarecordapplication.model.vo.EventDetailVO;
 import com.xmz.datarecordapplication.service.EventRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,11 @@ public class EventRecordController {
     @PostMapping("/getUpdateRows")
     public Page<UpdateRowRecord> getUpdateRows(@RequestBody DataRecordParam param) {
         return eventRecordService.getUpdateRowList(param);
+    }
+
+    @PostMapping("/getCRUDStat")
+    public CrudStat getCRUDStat(@RequestBody CRUDStatParam param) {
+        return eventRecordService.getCRUDStat(param);
     }
 
 }
