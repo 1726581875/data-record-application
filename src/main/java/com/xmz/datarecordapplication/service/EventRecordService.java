@@ -30,7 +30,7 @@ public interface EventRecordService {
      * @param id
      * @return
      */
-    EventDetailVO getById(Long id);
+    EventDetailVO getById(Long id, String dataSourceId);
 
 
     /**

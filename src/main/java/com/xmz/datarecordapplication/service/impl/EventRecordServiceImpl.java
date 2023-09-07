@@ -40,25 +40,7 @@ public class EventRecordServiceImpl implements EventRecordService {
 
     @Override
     public Page<EventRecord> getList(EventRecordListParam param) {
-        //return eventRecordMapper.selectPage(param, getQueryWrapper(param));
-
-        return eventRecordMapper.getEventList(param, getTenantSuffix());
-    }
-
-    private String getTenantSuffix() {
-        String tenantId = null;
-        // TODO catch异常，为了方便测试，无需登录直接查询
-        try {
-            tenantId = UserContext.getAuthorizeUser().getTenantId();
-        } catch (SysUnauthorizedException e){
-            log.info("获取租户id失败, 未授权异常", e);
-        }
-
-        if(tenantId == null){
-            return "";
-        }
-        // TODO _tenantId_dataSourceId
-        return "_" + tenantId + "_1";
+        return eventRecordMapper.getEventList(param, getTenantSuffix(param.getDataSourceId()));
     }
 
     private String getTenantSuffix(String dataSourceId) {
@@ -77,38 +59,13 @@ public class EventRecordServiceImpl implements EventRecordService {
         return "_" + tenantId + "_" + dataSourceId;
     }
 
-    private LambdaQueryWrapper<EventRecord> getQueryWrapper(EventRecordListParam param) {
-
-        LambdaQueryWrapper<EventRecord> queryWrapper = new LambdaQueryWrapper<>();
-        // 时间范围条件
-        if (Objects.nonNull(param.getTimeRange())) {
-            if (param.getTimeRange().getStartTime() != null) {
-                queryWrapper.ge(EventRecord::getEventTimestamp, param.getTimeRange().getStartTime());
-            }
-            if (param.getTimeRange().getEndTime() != null) {
-                queryWrapper.le(EventRecord::getEventTimestamp, param.getTimeRange().getEndTime());
-            }
-        }
-        // 事件类型
-        if (StringUtils.hasLength(param.getEventType())) {
-            queryWrapper.eq(EventRecord::getEventType, param.getEventType());
-        }
-        // 排序方式
-        if (Objects.nonNull(param.getAsc()) && param.getAsc().equals(true)) {
-            queryWrapper.orderByAsc(EventRecord::getEventTimestamp);
-        } else {
-            queryWrapper.orderByDesc(EventRecord::getEventTimestamp);
-        }
-        return queryWrapper;
-    }
-
 
 
     @Override
-    public EventDetailVO getById(Long id) {
+    public EventDetailVO getById(Long id, String dataSourceId) {
 
         EventDetailVO eventDetailVO = new EventDetailVO();
-        EventRecord eventRecord = eventRecordMapper.getEventRecordById(id, getTenantSuffix());
+        EventRecord eventRecord = eventRecordMapper.getEventRecordById(id, getTenantSuffix(dataSourceId));
         if(eventRecord == null) {
             throw new IllegalStateException("数据不存在，id=" + id);
         }
@@ -125,7 +82,7 @@ public class EventRecordServiceImpl implements EventRecordService {
 
                 break;
             case "QUERY":
-                eventDetailVO.setExtraInfo(queryEventRecordMapper.getQueryEventByRecordId(id, getTenantSuffix()));
+                eventDetailVO.setExtraInfo(queryEventRecordMapper.getQueryEventByRecordId(id, getTenantSuffix(dataSourceId)));
                 break;
             case "TABLE_MAP":
                 eventDetailVO.setExtraInfo(null);
@@ -143,17 +100,17 @@ public class EventRecordServiceImpl implements EventRecordService {
 
     @Override
     public Page<InsertRowRecord> getInsertRowList(DataRecordParam param) {
-        return insertRowRecordMapper.getInsertRowList(param, getTenantSuffix());
+        return insertRowRecordMapper.getInsertRowList(param, getTenantSuffix(param.getDataSourceId()));
     }
 
     @Override
     public Page<DeleteRowRecord> getDeleteRowList(DataRecordParam param) {
-        return deleteRowRecordMapper.getDeleteRowList(param, getTenantSuffix());
+        return deleteRowRecordMapper.getDeleteRowList(param, getTenantSuffix(param.getDataSourceId()));
     }
 
     @Override
     public Page<UpdateRowRecord> getUpdateRowList(DataRecordParam param) {
-        return updateRowRecordMapper.getUpdateRowList(param, getTenantSuffix());
+        return updateRowRecordMapper.getUpdateRowList(param, getTenantSuffix(param.getDataSourceId()));
     }
 
     @Override

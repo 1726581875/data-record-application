@@ -11,6 +11,7 @@ import com.xmz.datarecordapplication.model.param.EventRecordListParam;
 import com.xmz.datarecordapplication.model.vo.CrudStat;
 import com.xmz.datarecordapplication.model.vo.EventDetailVO;
 import com.xmz.datarecordapplication.service.EventRecordService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,8 +33,8 @@ public class EventRecordController {
     }
 
     @GetMapping("/getById")
-    public EventDetailVO getList(@RequestParam Long id) {
-        return eventRecordService.getById(id);
+    public EventDetailVO getList(@RequestParam Long id, @Param("dataSourceId") String dataSourceId) {
+        return eventRecordService.getById(id, dataSourceId);
     }
 
     @PostMapping("/getInsertRows")

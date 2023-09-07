@@ -11,6 +11,8 @@ import lombok.Data;
 @Data
 public class EventRecordListParam extends Page {
 
+    private String dataSourceId;
+
     private TimeRange timeRange;
 
     private String eventType;

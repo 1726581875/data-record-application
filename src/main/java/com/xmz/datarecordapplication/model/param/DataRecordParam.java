@@ -10,6 +10,8 @@ import lombok.Data;
 @Data
 public class DataRecordParam extends Page {
 
+    private String dataSourceId;
+
     private Long recordId;
 
 }
