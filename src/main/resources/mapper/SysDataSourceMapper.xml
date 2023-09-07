@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xmz.datarecordapplication.mapper.sys.SysDataSourceMapper">
+
+
+    <select id="getList" resultType="com.xmz.datarecordapplication.model.vo.SysDataSourceListVO">
+        SELECT
+        sds.id,sds.tenant_id,sds.name,sds.hostname,sds.server_port,sds.username,sds.status,sds.create_time,sds.update_time,sds.schema_name,
+        CASE
+        WHEN EXISTS ( SELECT 1 FROM binlog_listen_state WHERE state = '1' AND tenant_id = sds.tenant_id AND data_source_id = sds.id )
+        THEN '1'
+        ELSE '0' END AS isListen
+        FROM
+        sys_data_source sds
+        where sds.tenant_id = #{param.tenantId}
+        <if test="param.name != null and param.name != ''">
+            AND sds.name like concat('%',#{param.name},'%')
+        </if>
+    </select>
+</mapper>
+ 

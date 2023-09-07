@@ -17,7 +17,7 @@ spring:
   redis:
     host: localhost
     port: 6379
-    password: root
+    password:
 
 #mybatis配置文件位置
 mybatis:
@@ -35,5 +35,5 @@ logging:
 
 
 auth:
-  authExcludePaths: /**
+  # authExcludePaths: /**
   useRedis: true

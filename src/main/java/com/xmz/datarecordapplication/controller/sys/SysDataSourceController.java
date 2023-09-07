@@ -1,11 +1,14 @@
 package com.xmz.datarecordapplication.controller.sys;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xmz.datarecordapplication.model.common.RespResult;
+import com.xmz.datarecordapplication.model.dto.TenantSourceDTO;
 import com.xmz.datarecordapplication.model.entity.sys.SysDataSource;
 import com.xmz.datarecordapplication.model.entity.sys.SysTenantTable;
 import com.xmz.datarecordapplication.model.param.sys.DataMigrationParam;
 import com.xmz.datarecordapplication.model.param.sys.DataSourceListParam;
 import com.xmz.datarecordapplication.model.param.sys.TenantTableListParam;
+import com.xmz.datarecordapplication.model.vo.SysDataSourceListVO;
 import com.xmz.datarecordapplication.service.sys.SysDataSourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +28,7 @@ public class SysDataSourceController {
 
 
     @PostMapping("/getList")
-    public Page<SysDataSource> getList(@RequestBody DataSourceListParam param) {
+    public Page<SysDataSourceListVO> getList(@RequestBody DataSourceListParam param) {
         return sourceService.getList(param);
     }
 
@@ -58,6 +61,21 @@ public class SysDataSourceController {
     @PostMapping("/dataMigration")
     public void dataMigration(@RequestBody DataMigrationParam param) {
         sourceService.dataMigration(param);
+    }
+
+    /**
+     * 监听binlog日志
+     * @param dto
+     * @return
+     */
+    @PostMapping("/listenBinlog")
+    public RespResult listenBinlog(@RequestBody TenantSourceDTO dto) {
+        return sourceService.listenBinlog(dto);
+    }
+
+    @PostMapping("/cancelListen")
+    public RespResult cancelListen(@RequestBody TenantSourceDTO dto){
+        return sourceService.cancelListen(dto);
     }
 
 

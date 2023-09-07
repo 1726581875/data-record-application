@@ -12,4 +12,6 @@ public class DataSourceListParam extends Page {
 
     private String name;
 
+    private String tenantId;
+
 }

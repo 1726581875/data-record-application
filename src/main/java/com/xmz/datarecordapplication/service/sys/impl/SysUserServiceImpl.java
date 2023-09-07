@@ -97,10 +97,16 @@ public class SysUserServiceImpl implements SysUserService {
             throw new ValidationException("密码错误");
         }
 
-        // 用户存储到session
+
         AuthorizeUser sysUser = new AuthorizeUser(user.getId(), user.getName(), user.getAccount());
         sysUser.setTenantId(user.getTenantId());
-        request.getSession().setAttribute(AuthorizeUser.USER_KEY, sysUser);
+        // 用户存储到session
+        if(useRedis){
+            redisTemplate.opsForValue().set(AuthorizeUser.USER_KEY + ":"  +request.getSession().getId(), sysUser);
+        } else {
+            request.getSession().setAttribute(AuthorizeUser.USER_KEY, sysUser);
+        }
+
     }
 
 
