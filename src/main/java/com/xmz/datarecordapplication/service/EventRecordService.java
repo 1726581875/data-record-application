@@ -10,6 +10,7 @@ import com.xmz.datarecordapplication.model.param.DataRecordParam;
 import com.xmz.datarecordapplication.model.param.EventRecordListParam;
 import com.xmz.datarecordapplication.model.vo.CrudStat;
 import com.xmz.datarecordapplication.model.vo.EventDetailVO;
+import com.xmz.datarecordapplication.model.vo.EventRecordListVo;
 
 /**
  * @author xiaomingzhang
@@ -23,7 +24,7 @@ public interface EventRecordService {
      * @param param
      * @return
      */
-    Page<EventRecord> getList(EventRecordListParam param);
+    Page<EventRecordListVo> getList(EventRecordListParam param);
 
     /**
      * 根据id获取详情

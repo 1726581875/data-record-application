@@ -10,6 +10,7 @@ import com.xmz.datarecordapplication.model.param.DataRecordParam;
 import com.xmz.datarecordapplication.model.param.EventRecordListParam;
 import com.xmz.datarecordapplication.model.vo.CrudStat;
 import com.xmz.datarecordapplication.model.vo.EventDetailVO;
+import com.xmz.datarecordapplication.model.vo.EventRecordListVo;
 import com.xmz.datarecordapplication.service.EventRecordService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class EventRecordController {
     private EventRecordService eventRecordService;
 
     @PostMapping("/getList")
-    public Page<EventRecord> getList(@RequestBody EventRecordListParam param) {
+    public Page<EventRecordListVo> getList(@RequestBody EventRecordListParam param) {
         return eventRecordService.getList(param);
     }
 

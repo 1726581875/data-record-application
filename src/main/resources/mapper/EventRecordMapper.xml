@@ -4,8 +4,9 @@
 
 <mapper namespace="com.xmz.datarecordapplication.mapper.EventRecordMapper">
 
-    <select id="getEventList" resultType="com.xmz.datarecordapplication.model.entity.event.EventRecord">
-        select er.* from event_record${tenantSuffix} er
+    <select id="getEventList" resultType="com.xmz.datarecordapplication.model.vo.EventRecordListVo">
+        select er.*,(select exec_sql from query_event_record${tenantSuffix} where record_id = er.id limit 1) as "sql"
+        from event_record${tenantSuffix} er
         where 1 = 1
         <if test="param.eventType != null and param.eventType != ''">
             AND er.event_type = #{param.eventType}

@@ -11,13 +11,12 @@ import com.xmz.datarecordapplication.model.param.DataRecordParam;
 import com.xmz.datarecordapplication.model.param.EventRecordListParam;
 import com.xmz.datarecordapplication.model.vo.CrudStat;
 import com.xmz.datarecordapplication.model.vo.EventDetailVO;
+import com.xmz.datarecordapplication.model.vo.EventRecordListVo;
 import com.xmz.datarecordapplication.service.EventRecordService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.util.Objects;
 
 /**
  * @author xiaomingzhang
@@ -39,7 +38,7 @@ public class EventRecordServiceImpl implements EventRecordService {
     private InsertRowRecordMapper insertRowRecordMapper;
 
     @Override
-    public Page<EventRecord> getList(EventRecordListParam param) {
+    public Page<EventRecordListVo> getList(EventRecordListParam param) {
         return eventRecordMapper.getEventList(param, getTenantSuffix(param.getDataSourceId()));
     }
 

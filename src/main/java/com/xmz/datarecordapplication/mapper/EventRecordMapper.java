@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xmz.datarecordapplication.model.entity.event.EventRecord;
 import com.xmz.datarecordapplication.model.param.EventRecordListParam;
 import com.xmz.datarecordapplication.model.vo.CrudStat;
+import com.xmz.datarecordapplication.model.vo.EventRecordListVo;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -18,7 +19,7 @@ public interface EventRecordMapper extends BaseMapper<EventRecord> {
      * @param param
      * @return
      */
-    Page<EventRecord> getEventList(@Param("param") EventRecordListParam param, @Param("tenantSuffix") String tenantSuffix);
+    Page<EventRecordListVo> getEventList(@Param("param") EventRecordListParam param, @Param("tenantSuffix") String tenantSuffix);
 
     EventRecord getEventRecordById(@Param("id") Long id, @Param("tenantSuffix") String tenantSuffix);
 
