@@ -13,6 +13,7 @@ spring:
   #时间格式化
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
   #redis配置
   redis:
     host: localhost
@@ -30,7 +31,7 @@ mybatis:
 logging:
   #config: classpath:logback-spring.xml
   level:
-    com.xmz.datarecordapplication: debug
+    com.xmz.application: debug
     ROOT: INFO
 
 

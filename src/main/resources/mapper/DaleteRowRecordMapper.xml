@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.xmz.datarecordapplication.mapper.DeleteRowRecordMapper">
+<mapper namespace="com.xmz.application.mapper.DeleteRowRecordMapper">
 
     <select id="getDeleteRowList"
-            resultType="com.xmz.datarecordapplication.model.entity.event.DeleteRowRecord">
+            resultType="com.xmz.application.model.event.entity.DeleteRowRecord">
         select * from delete_row_record${tenantSuffix} drr
         where 1 = 1
         <if test="param.recordId != null and param.recordId != ''">

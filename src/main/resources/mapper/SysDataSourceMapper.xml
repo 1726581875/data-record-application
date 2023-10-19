@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.xmz.datarecordapplication.mapper.sys.SysDataSourceMapper">
+<mapper namespace="com.xmz.application.mapper.sys.SysDataSourceMapper">
 
 
-    <select id="getList" resultType="com.xmz.datarecordapplication.model.vo.SysDataSourceListVO">
+    <select id="getList" resultType="com.xmz.application.model.common.vo.SysDataSourceListVO">
         SELECT
         sds.id,sds.tenant_id,sds.name,sds.hostname,sds.server_port,sds.username,sds.status,sds.create_time,sds.update_time,sds.schema_name,
         CASE

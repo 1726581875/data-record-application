@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.xmz.datarecordapplication.mapper.sys.SysUserMapper">
+<mapper namespace="com.xmz.application.mapper.sys.SysUserMapper">
 
 
-    <select id="getUserByAccount" resultType="com.xmz.datarecordapplication.model.entity.sys.SysUser">
+    <select id="getUserByAccount" resultType="com.xmz.application.model.sys.entity.SysUser">
         select * from sys_user where account = #{account}
     </select>
 </mapper>

@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.xmz.datarecordapplication.mapper.EventRecordMapper">
+<mapper namespace="com.xmz.application.mapper.EventRecordMapper">
 
-    <select id="getEventList" resultType="com.xmz.datarecordapplication.model.vo.EventRecordListVo">
+    <select id="getEventList" resultType="com.xmz.application.model.common.vo.EventRecordListVo">
         select er.*,(select exec_sql from query_event_record${tenantSuffix} where record_id = er.id limit 1) as "sql"
         from event_record${tenantSuffix} er
         where 1 = 1
@@ -25,11 +25,11 @@
             order by er.event_timestamp desc
         </if>
     </select>
-    <select id="getEventRecordById" resultType="com.xmz.datarecordapplication.model.entity.event.EventRecord">
+    <select id="getEventRecordById" resultType="com.xmz.application.model.event.entity.EventRecord">
         select er.* from event_record${tenantSuffix} er where er.id = #{id}
     </select>
 
-    <select id="getCRUDStat" resultType="com.xmz.datarecordapplication.model.vo.CrudStat">
+    <select id="getCRUDStat" resultType="com.xmz.application.model.common.vo.CrudStat">
     SELECT
         COALESCE(sum(CASE WHEN event_type = 'QUERY' THEN 1 ELSE 0 END ), 0) query_num,
         COALESCE (sum(CASE WHEN event_type = 'EXT_WRITE_ROWS' THEN 1 ELSE 0 END ), 0) insert_num,

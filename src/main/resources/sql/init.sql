@@ -2,7 +2,7 @@
 -- 系统用户表
 CREATE TABLE `sys_user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-	`tenantId` varchar(36) NOT NULL COMMENT '租户id',
+  `tenantId` varchar(36) NOT NULL COMMENT '租户id',
   `name` varchar(40) NOT NULL COMMENT '用户名称',
   `account` varchar(20) NOT NULL COMMENT '登录账号',
   `password` varchar(1048) NOT NULL COMMENT '登录密码',
@@ -39,6 +39,7 @@ CREATE TABLE `sys_tenant_table` (
   `data_source_id` bigint(20) NOT NULL COMMENT '数据源id',
   `source_table_name` varchar(64) NOT NULL COMMENT '源表名',
   `table_name` varchar(64) NOT NULL COMMENT '备份表名',
+  `row_num` bigint(20) DEFAULT 0 COMMENT '数据量',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`),
